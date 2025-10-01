@@ -28,7 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // --- PERSONAL TRIVIA QUESTIONS ---
-    // Answers are now only for reference; any non-empty response is accepted.
     const personalTrivia = [
         {
             question: "What was Sriwi's best and most overwhelming feeling when we decided to start this journey together?",
@@ -44,7 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     ];
 
-    let currentQuestionIndex = 0;
     let cardsMatched = 0; 
     let triviaAnswered = 0; 
     let isTriviaActive = false; 
@@ -55,29 +53,52 @@ document.addEventListener('DOMContentLoaded', () => {
     let lockBoard = false;
     let firstCard, secondCard;
     
+    // --- FINAL MESSAGE ARRAY (18 characters total) ---
+    // The message is "i love you disha!!"
+    const finalMessageCharacters = ['i', ' ', 'l', 'o', 'v', 'e', ' ', 'y', 'o', 'u', ' ', 'd', 'i', 's', 'h', 'a', '!', '!'];
+
+
     // 1. Shuffle the cards
+    // Note: We shuffle only the cardFaces (the matching letters) to ensure a randomized game.
     (function shuffle() {
         cardFaces.sort(() => Math.random() - 0.5);
     })();
 
-    // 2. Create Cards
+    // 2. Create Cards - MODIFIED
     function createCards() {
         gameContainer.innerHTML = '';
-        cardFaces.forEach(face => {
+        
+        // This array will hold card data including its unique position and its face.
+        const cardData = [];
+        for (let i = 0; i < cardFaces.length; i++) {
+            cardData.push({
+                face: cardFaces[i],
+                position: i // Assign a fixed position from 0 to 17
+            });
+        }
+
+        cardData.forEach(data => {
             const card = document.createElement('div');
             card.classList.add('memory-card');
-            card.dataset.name = face;
-            card.innerHTML = `<div class="front-face"><span>${face}</span></div><div class="back-face">?</div>`;
+            
+            // data-name is for the matching logic ('S', 'R', etc.)
+            card.dataset.name = data.face; 
+            // data-position is for the final revealed message ('i', ' ', 'l', 'o', etc.)
+            card.dataset.position = data.position; 
+            
+            card.innerHTML = `<div class="front-face"><span>${data.face}</span></div><div class="back-face">?</div>`;
             card.addEventListener('click', flipCard);
             gameContainer.appendChild(card);
         });
+        
+        // The original size styling
         document.querySelectorAll('.memory-card').forEach(card => {
              card.style.width = '16.66%';
              card.style.height = '33.33%';
         });
     }
 
-    // 3. Handle Card Flip
+    // 3. Handle Card Flip (no change needed here)
     function flipCard() {
         if (lockBoard || isTriviaActive) return; 
         if (this === firstCard) return;
@@ -94,15 +115,15 @@ document.addEventListener('DOMContentLoaded', () => {
         checkForMatch();
     }
 
-    // 4. Check for Match
+    // 4. Check for Match (no change needed here)
     function checkForMatch() {
         let isMatch = firstCard.dataset.name === secondCard.dataset.name;
         
         if (isMatch) {
-            disableCards();
-            cardsMatched++;
+            disableCards(); 
+            cardsMatched++; // Now officially count the match
             
-            // Check for trivia unlock points (after 2, 4, 6 matches, or if all cards matched)
+            // Check for trivia unlock points
             if (cardsMatched === 2 || cardsMatched === 4 || cardsMatched === 6 || cardsMatched === cardFaces.length / 2) {
                 if (triviaAnswered < personalTrivia.length) {
                     showTriviaQuestion();
@@ -118,12 +139,41 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 5. Disable Cards (Match found)
+    // 5. Disable Cards (Match found) - MODIFIED FOR POSITION-BASED CHARACTER ASSIGNMENT
     function disableCards() {
         firstCard.removeEventListener('click', flipCard);
         secondCard.removeEventListener('click', flipCard);
+        
+        // Get the fixed positions of the two matched cards
+        const pos1 = parseInt(firstCard.dataset.position);
+        const pos2 = parseInt(secondCard.dataset.position);
+
+        // Get the correct character from the message based on the card's position
+        const char1 = finalMessageCharacters[pos1];
+        const char2 = finalMessageCharacters[pos2];
+
+        // --- Assign Char 1 to firstCard's position ---
+        const firstCardFrontFace = firstCard.querySelector('.front-face span');
+        if (firstCardFrontFace && char1 !== undefined) {
+            // Use non-breaking space (&nbsp; or \u00A0) for spaces to remain visible on the board layout
+            firstCardFrontFace.textContent = char1 === ' ' ? '\u00A0' : char1; 
+            firstCardFrontFace.style.fontSize = '1.2em'; 
+            // Add a class for spaces if you want to style them differently (optional)
+            if (char1 === ' ') firstCardFrontFace.parentElement.classList.add('is-space');
+        }
+
+        // --- Assign Char 2 to secondCard's position ---
+        const secondCardFrontFace = secondCard.querySelector('.front-face span');
+        if (secondCardFrontFace && char2 !== undefined) {
+            secondCardFrontFace.textContent = char2 === ' ' ? '\u00A0' : char2; 
+            secondCardFrontFace.style.fontSize = '1.2em'; 
+            if (char2 === ' ') secondCardFrontFace.parentElement.classList.add('is-space');
+        }
+
+        // Add the 'matched' class
         firstCard.classList.add('matched');
         secondCard.classList.add('matched');
+        
         resetBoard();
     }
 
@@ -143,7 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
         [firstCard, secondCard] = [null, null];
     }
     
-    // 8. Show Trivia Question
+    // 8. Show Trivia Question (no change needed here)
     function showTriviaQuestion() {
         isTriviaActive = true; 
         
@@ -161,7 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
         gameContainer.style.opacity = '0.3'; 
     }
 
-    // 9. Handle Trivia Submission (Accepts any non-empty answer)
+    // 9. Handle Trivia Submission (no change needed here)
     triviaForm.addEventListener('submit', function(e) {
         e.preventDefault(); 
         
@@ -196,7 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 10. Game Won
+    // 10. Game Won (no change needed here)
     function gameWon() {
         triviaForm.classList.add('hidden');
         gameContainer.style.display = 'none'; 
