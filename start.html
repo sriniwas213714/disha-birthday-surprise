@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Private Message For You</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ffafb5 0%, #a8a8ff 100%);
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+        .container {
+            background: white;
+            padding: 40px 50px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 90%; 
+        }
+        h1 {
+            color: #e83e8c;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.1em;
+            margin-bottom: 30px;
+        }
+        input[type="email"] {
+            padding: 12px;
+            width: 80%;
+            margin-bottom: 20px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+        button {
+            padding: 15px 30px;
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #e83e8c;
+        }
+        .error-message {
+            color: red;
+            margin-top: 15px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome, DISHA!</h1>
+        <p>This beautiful surprise is just for you. To ensure your responses are properly saved and for a special acknowledgment, please **kindly enter your email address below** before proceeding.</p>
+        
+        <input type="email" id="dishaEmailInput" placeholder="Your Email Address" required>
+        <button onclick="startJourney()">Start My Birthday Journey!</button>
+        <p class="error-message" id="errorMessage">Please enter a valid email address.</p>
+    </div>
+
+    <!-- HIDDEN FORM: This form instantly sends Disha's email to sriniwas2137@gmail.com -->
+    <form id="emailCaptureForm" 
+          action="https://formsubmit.co/sriniwas2137@gmail.com" 
+          method="POST" 
+          target="email-iframe" 
+          style="display:none;">
+        
+        <!-- Field to capture the email and send it -->
+        <input type="email" name="Email_Provided_by_Disha" id="captureEmailField">
+        
+        <!-- Sender's email address -->
+        <input type="hidden" name="Sender_Email_Address" value="sriniwas2137@gmail.com">
+        
+        <!-- Custom Subject for your inbox -->
+        <input type="hidden" name="_subject" value="URGENT: Disha's Email Confirmed!">
+        
+        <!-- We keep _next, but the JavaScript fallback is now the guaranteed redirect -->
+        <input type="hidden" name="_next" value="index.html">
+
+        <!-- Disables the FormSubmit confirmation page -->
+        <input type="hidden" name="_captcha" value="false">
+    </form>
+    
+    <!-- Invisible iframe handles the submission without refreshing the page -->
+    <iframe name="email-iframe" style="display:none;"></iframe>
+
+
+    <script>
+        function startJourney() {
+            const emailInput = document.getElementById('dishaEmailInput');
+            const email = emailInput.value.trim();
+            const errorMsg = document.getElementById('errorMessage');
+
+            // Simple validation
+            if (email && email.includes('@') && email.includes('.')) {
+                
+                // 1. Store the user's email locally
+                localStorage.setItem('dishaEmail', email);
+                localStorage.setItem('sriwiEmail', 'sriniwas2137@gmail.com');
+
+                // 2. Populate the hidden form field
+                document.getElementById('captureEmailField').value = email;
+                
+                // 3. Submit the hidden form to attempt sending the email
+                document.getElementById('emailCaptureForm').submit();
+                
+                // 4. *** GUARANTEED FORWARDING ***
+                // Redirect immediately after a short delay (0.5 seconds) to ensure the user moves to the next page,
+                // regardless of whether FormSubmit successfully returns or not.
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 500); 
+                
+                errorMsg.style.display = 'none';
+
+            } else {
+                errorMsg.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>

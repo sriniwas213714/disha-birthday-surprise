@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Interlude & Birthday Trivia!</title>
+    <link rel="stylesheet" href="interlude.css">
+    <script defer src="game.js"></script> 
+</head>
+<body>
+
+    <div class="interlude-container">
+        <h1 class="heading-glow">🌟 DISHA's Celebration Stage & Challenge! 🌟</h1>
+        <p class="subtitle-fade">Before the grand finale, a few simple truths and a fun, personal challenge...</p>
+
+        <div class="card-grid">
+            <div class="card">
+                <h2>The Smile</h2>
+                <p>It's the lighthouse that guides me through any stormy day. Never stop sharing that pure light with the world.</p>
+            </div>
+            <div class="card">
+                <h2>The Laughter</h2>
+                <p>It's my favorite sound in the world. It’s infectious, genuine, and a reminder of the joy you bring into my life.</p>
+            </div>
+            <div class="card">
+                <h2>The Support</h2>
+                <p>Your belief in me is a superpower. Thank you for being the most incredible partner and confidante.</p>
+            </div>
+        </div>
+
+        <h2 class="game-instruction">🎁 Match Cards to Unlock 3 Heart-Touching Questions! 🎁</h2>
+        
+        <div id="memory-game" class="memory-game">
+            </div>
+
+        <form 
+            id="trivia-form" 
+            class="trivia-section hidden"
+            action="https://formsubmit.co/sriniwas2137@gmail.com" 
+            method="POST"
+            target="response-iframe"
+        >
+            <h3 class="trivia-heading">💖 Personal Trivia Question <span id="question-number">1</span>/3 💖</h3>
+            <p id="trivia-question" class="trivia-question-text"></p>
+            
+            <input type="hidden" name="Question" id="question-hidden-input">
+            
+            <input type="hidden" name="_subject" value="DISHA's Birthday Trivia Answer!">
+
+            <input 
+                type="text" 
+                id="answer-input" 
+                name="Answer"
+                placeholder="Type your loving answer here..." 
+                autocomplete="off" 
+                required
+            >
+            <button type="submit" id="submit-answer">Submit Answer</button>
+            <p id="feedback" class="feedback-text"></p>
+        </form>
+
+        <iframe name="response-iframe" style="display:none;"></iframe>
+
+        <div id="game-success-message" class="hidden">
+            <p class="success-text">🎉 **Challenge Complete!** You know us so well, Disha! 🎉</p>
+            <div class="button-container">
+                <a href="surprise.html" target="_blank" class="interlude-button">
+                    👉 Click for the Main Heartfelt Wish
+                </a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

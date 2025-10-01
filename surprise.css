@@ -1,0 +1,113 @@
+/* --- GLOBAL STYLES & BACKGROUND --- */
+body {
+    font-family: 'Georgia', serif; 
+    color: #f0f0f0; 
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    text-align: center;
+    overflow: hidden;
+    
+    background: #1c0f20; 
+    background-image: url('https://source.unsplash.com/random/1600x900/?glitter,bokeh,dark,gold'); 
+    background-size: cover;
+    background-attachment: fixed;
+    position: relative;
+}
+
+/* --- BACKGROUND OVERLAY for better readability --- */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7); 
+    backdrop-filter: blur(2px); 
+    z-index: 1;
+}
+
+/* --- MESSAGE BOX --- */
+.message-box {
+    position: relative;
+    z-index: 2; 
+    max-width: 800px;
+    padding: 60px;
+    border-radius: 20px;
+    background: rgba(40, 0, 50, 0.75); 
+    box-shadow: 0 0 40px rgba(255, 215, 0, 0.3), 0 0 80px rgba(255, 215, 0, 0.15); 
+    animation: fadeInScale 1.5s ease-out;
+}
+
+/* --- TEXT STYLES --- */
+.grand-message {
+    font-size: 3.5em;
+    font-family: 'Brush Script MT', cursive; 
+    color: #ff69b4; 
+    text-shadow: 0 0 10px #ff69b4, 0 0 20px rgba(255, 105, 180, 0.8);
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+}
+
+.final-note {
+    font-size: 1.4em;
+    font-style: italic;
+    margin-top: 30px;
+    line-height: 1.6;
+    color: #e0e0e0;
+}
+
+.signature {
+    font-size: 1.1em;
+    margin-top: 40px;
+    color: #bbb;
+}
+
+.final-instruction {
+    font-size: 1.6em;
+    margin: 40px 0 30px;
+    font-weight: bold;
+    color: #ffd700; 
+    text-shadow: 0 0 5px #ffd700;
+    animation: pulseGlow 2s infinite alternate; 
+}
+
+/* --- BUTTON STYLES --- */
+.finale-button {
+    display: inline-block;
+    padding: 25px 50px;
+    margin-top: 30px;
+    background-color: #e74c3c; 
+    color: white;
+    text-decoration: none;
+    border-radius: 50px; 
+    font-size: 2em;
+    font-weight: bold;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 105, 180, 0.7); 
+    border: 3px solid #ffdd59; 
+    transition: all 0.3s ease;
+}
+
+.finale-button:hover {
+    background-color: #c0392b;
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7), 0 0 50px rgba(255, 105, 180, 1);
+}
+
+/* --- KEYFRAME ANIMATIONS --- */
+@keyframes fadeInScale {
+    0% { transform: scale(0.9); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes pulseGlow {
+    from {
+        text-shadow: 0 0 5px #ffd700, 0 0 10px rgba(255, 215, 0, 0.5);
+    }
+    to {
+        text-shadow: 0 0 8px #ffd700, 0 0 15px rgba(255, 215, 0, 0.8);
+    }
+}
